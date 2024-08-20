@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360 Image with Arrow</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+</head>
+<body>
+    <a-scene>
+        <a-assets>
+            <img id="city1" src="./foto-360_1.jpg">
+            <img id="city2" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+            <!-- Imagem da seta -->
+            <img id="arrow" src="./seta.png">
+        </a-assets>
+
+        <!-- Sky component to display the panoramic image -->
+        <a-sky id="sky" src="#city1" rotation="0 -130 0"></a-sky>
+
+        <!-- Seta interativa -->
+        <a-image src="#arrow" position="9 -1.5 -4" rotation="90 360 0" width="4" height="4" class="clickable"></a-image>
+
+        <!-- Texto na cena -->
+        <a-text font="kelsonsans" value="Paisagem da b42" width="6" position="-2.5 0.25 -1.5" rotation="0 15 0"></a-text>
+
+        <!-- Camera with default settings -->
+        <a-camera position="0 1.6 0" look-controls>
+            <a-cursor></a-cursor>
+        </a-camera>
+    </a-scene>
+
+    <script>
+        // Adiciona um evento de clique na seta após a cena estar carregada
+        AFRAME.registerComponent('seta-click', {
+          init: function () {
+                this.el.addEventListener('click', function () {
+                const camera = document.querySelector('a-camera');
+                const sky = document.querySelector('#sky');
+                sky.setAttribute('src', '#city2');
+            });
+          }
+        });
+
+        // Aplica o componente à seta
+        document.addEventListener('DOMContentLoaded', function () {
+          const arrow = document.querySelector('.clickable');
+          arrow.setAttribute('seta-click', '');
+        });
+      </script>
+</body>
+</html>
+
