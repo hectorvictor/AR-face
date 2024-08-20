@@ -1,0 +1,171 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const list = ["glasses1","glasses2", "glasses3", "glasses4", "glasses5", "glasses6"];
+        //const list = ["glasses1", "glasses2", "hat1", "hat2", "earring"];
+        const visibles = [false, false, false, false, false, false];
+        const setVisible = (button, entities, visible) => {
+          if (visible) {
+            button.classList.add("selected");
+          } else {
+            button.classList.remove("selected");
+          }
+            entities.forEach((entity) => {
+            entity.setAttribute("visible", visible);
+          });
+        }
+        list.forEach((item, index) => {
+          const button = document.querySelector("#" + item);
+          const entities = document.querySelectorAll("." + item + "-entity");
+          setVisible(button, entities, false);
+          button.addEventListener('click', () => {
+            list.forEach((otherItem, otherIndex) => {
+              if (otherIndex !== index) {
+                const otherButton = document.querySelector("#" + otherItem);
+                const otherEntities = document.querySelectorAll("." + otherItem + "-entity");
+                visibles[otherIndex] = false;
+                setVisible(otherButton, otherEntities, false);
+              }
+            });
+            visibles[index] = !visibles[index];
+            setVisible(button, entities, visibles[index]);
+          });
+        });
+      })
+    </script>
+    <style>
+      body {
+        margin: 0;
+      }
+      .example-container {
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .options-panel {
+        position: fixed;
+        left: 4;
+        top: 5;
+        z-index: 2;
+        background-color: #fff;
+        box-shadow: 3px 3px 7px 0 rgba(0, 0, 0, 0.3);
+        background-color: rgb(239 239 239 / 95);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+      .content__mindAR img:not(#b42) {
+        width: 35px;
+        height: 35px;
+        object-fit: cover;
+        cursor: pointer;
+      }
+
+      .content__mindAR img:not(#b42).selected {
+        background-color: rgba(126, 209, 126, 0.774);
+        padding: 0px 5px;
+      }
+
+      .content__mindAR img:not(#b42):hover {
+        background-color: rgba(126, 209, 126, 0.589);
+        padding: 0px 5px;
+      }
+
+      .content__mindAR {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 300px;
+        width: 50px;
+        padding: 5px 0px;
+      }
+
+      .content__title {
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="example-container">
+      <div class="options-panel">
+        <div class="content__mindAR">
+          <div class="content__title">Óculos</div>
+          <img id="glasses1" src="../oculos/img/model1.png"/>
+          <img id="glasses2" src="../oculos/img/model2.png"/>
+          <img id="glasses3" src="../oculos/img/model3.png"/>
+          <img id="glasses4" src="../oculos/img/model4.png"/>
+          <img id="glasses5" src="../oculos/img/model5.png"/>
+          <img id="glasses6" src="../oculos/img/model6.png"/>
+          <!-- <img id="hat1" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat/thumbnail.png"/> -->
+          <!-- <img id="hat2" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat2/thumbnail.png"/> -->
+          <!-- <img id="earring" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/earring/thumbnail.png"/> -->
+          <img id="b42" src="../oculos/img/b42.svg"/>
+        </div>
+      </div>
+      <a-scene mindar-face embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+        <a-assets>
+          <a-asset-item id="headModel" src="./models/headModel/headOccluder.glb"></a-asset-item>
+          <a-asset-item id="glassesModel" src="./models/glasses/model1/scene.gltf"></a-asset-item>
+          <a-asset-item id="glassesModel2" src="./models/glasses/model2/scene.gltf"></a-asset-item>
+          <a-asset-item id="glassesModel3" src="./models/glasses/model3/scene.gltf"></a-asset-item>
+          <a-asset-item id="glassesModel4" src="./models/glasses/model4/scene.gltf"></a-asset-item>
+          <a-asset-item id="glassesModel5" src="./models/glasses/model5/scene.gltf"></a-asset-item>
+          <a-asset-item id="glassesModel6" src="./models/glasses/model6/scene.gltf"></a-asset-item>
+          <!-- <a-asset-item id="hatModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat/scene.gltf"></a-asset-item>
+          <a-asset-item id="hatModel2" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat2/scene.gltf"></a-asset-item>
+          <a-asset-item id="glassesModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses/scene.gltf"></a-asset-item>
+          <a-asset-item id="glassesModel2" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/scene.gltf"></a-asset-item>
+          <a-asset-item id="earringModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/earring/scene.gltf"></a-asset-item> -->
+        </a-assets>
+        <a-camera active="false" position="0 0 0"></a-camera>
+        <!-- head occluder -->
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model mindar-face-occluder position="0 -0.3 0.15"rotation="0 0 0" scale="0.065 0.065 0.065" src="#headModel"></a-gltf-model>
+        </a-entity>
+
+
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model class="glasses1-entity" rotation="180 -90 10" position="0.03 -0.3 0.27" scale="2.2 2.2 2.2" src="#glassesModel"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model class="glasses2-entity" rotation="8 0 0" position="0.01 -0.06 -0.02" scale="0.10 0.10 0.14" src="#glassesModel2"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model class="glasses3-entity" rotation="10 0 0" position="-0.01 -0.05 -0.06" scale="4.5 4.5 6.6" src="#glassesModel3"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model class="glasses4-entity" rotation="-8 180 2" position="-0.01 -0.09 0.02" scale="0.2 0.2 0.2" src="#glassesModel4"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model class="glasses5-entity" rotation="8 0 0" position="0.01 -0.15 0.02" scale="0.21 0.21 0.26" src="#glassesModel5"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model class="glasses6-entity" rotation="8 0 0" position="-0.01 -0.06 0.02" scale="0.108 0.108 0.16" src="#glassesModel6"></a-gltf-model>
+        </a-entity>
+        <!-- <a-entity mindar-face-target="anchorIndex: 10">
+          <a-gltf-model rotation="0 -0 0" position="0 -0.2 -0.5" scale="0.008 0.008 0.008" src="#hatModel2" class="hat2-entity" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model rotation="0 -0 0" position="0 0 0" scale="0.01 0.01 0.01" src="#glassesModel" class="glasses1-entity" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model rotation="0 -90 0" position="0 -0.3 0" scale="0.6 0.6 0.6" src="#glassesModel2" class="glasses2-entity" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 127">
+          <a-gltf-model rotation="-0.1 -0 0" position="0 -0.3 -0.3" scale="0.05 0.05 0.05" src="#earringModel" class="earring-entity" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 356">
+          <a-gltf-model rotation="0.1 -0 0" position="0 -0.3 -0.3" scale="0.05 0.05 0.05" src="#earringModel" class="earring-entity" visible="false"></a-gltf-model>
+        </a-entity> -->
+      </a-scene>
+    </div>
+  </body>
+</html>

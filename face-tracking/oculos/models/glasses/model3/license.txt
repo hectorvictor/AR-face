@@ -1,0 +1,8 @@
+Model Information:
+* title:	Rounded Rectangle Eyeglasses
+* source:	https://sketchfab.com/3d-models/rounded-rectangle-eyeglasses-d9ee418eb0b84c1b97c1063f30787cb0
+* author:	Mohit Akundi (https://sketchfab.com/mohitakundi)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
