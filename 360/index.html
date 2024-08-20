@@ -19,7 +19,7 @@
         <a-sky id="sky" src="#city1" rotation="0 -130 0"></a-sky>
 
         <!-- Seta interativa -->
-        <a-image src="#arrow" position="9 -1.5 -4" rotation="90 360 0" width="4" height="4" class="clickable"></a-image>
+        <a-image id="arrowEntity" src="#arrow" position="9 -1.5 -4" rotation="90 360 0" width="4" height="4" class="clickable"></a-image>
 
         <!-- Texto na cena -->
         <a-text font="kelsonsans" value="Paisagem da b42" width="6" position="-2.5 0.25 -1.5" rotation="0 15 0"></a-text>
@@ -38,6 +38,10 @@
                 const camera = document.querySelector('a-camera');
                 const sky = document.querySelector('#sky');
                 sky.setAttribute('src', '#city2');
+                const arrowEntity = document.querySelector('#arrowEntity');
+                if (arrowEntity) {
+                    arrowEntity.parentNode.removeChild(arrowEntity);
+                }
             });
           }
         });
