@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <title>Troca de Cor do Tênis</title>
+  <style>
+    .container {
+      width: 800px;
+      height: 600px;
+    }
+    model-viewer {
+      width: 100%;
+      height: 100%;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <model-viewer id="shoe" camera-controls touch-action="pan-y" height="1900px" width="1500px" src="./glb/MaterialsVariantsShoe.glb" tone-mapping="neutral" ar alt="Modelo 3D de um tênis">
+      <div class="controls">
+        <div>Variant: <select id="variant"></select></div>
+      </div>
+      <div class="slider">
+        <div class="slides">
+          <button class="slide selected" onclick="switchSrc(this, 'Chair')" style="background-image: url('./img/textures/texture-1.png');"></button>
+          <button class="slide" onclick="switchSrc(this, 'Mixer')" style="background-image: url('./img/textures/texture-2.png');"></button>
+          <button class="slide" onclick="switchSrc(this, 'GeoPlanter')" style="background-image: url('./img/textures/texture-3.png');"></button>
+          <button class="slide" onclick="switchSrc(this, 'ToyTrain')" style="background-image: url('./img/textures/texture-4.png');"></button>
+          <button class="slide" onclick="switchSrc(this, 'Canoe')" style="background-image: url('./img/textures/texture-5.png');"></button>
+        </div>
+      </div>
+    </model-viewer>
+  </div>
+    <script>
+    const modelViewerVariants = document.querySelector("model-viewer#shoe");
+    const select = document.querySelector('#variant');
+
+    modelViewerVariants.addEventListener('load', () => {
+      const names = modelViewerVariants.availableVariants;
+      for (const name of names) {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        select.appendChild(option);
+      }
+      // Adds a default option.
+      const option = document.createElement('option');
+        option.value = 'default';
+        option.textContent = 'Default';
+        select.appendChild(option);
+    });
+
+    select.addEventListener('input', (event) => {
+      modelViewerVariants.variantName = event.target.value === 'default' ? null : event.target.value;
+    });
+    </script>
+</body>
+</html>
+
