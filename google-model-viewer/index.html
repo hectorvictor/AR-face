@@ -5,55 +5,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <title>Troca de Cor do Tênis</title>
+
   <style>
-    .container {
+    .REMOVER_model-viewer-container {
       width: 800px;
-      height: 600px;
+      height: 800px;
     }
+  </style>
+  <style>
+    /* This keeps child nodes hidden while the element loads */
+    :not(:defined) > * {
+      display: none;
+    }
+
     model-viewer {
       width: 100%;
       height: 100%;
+      background-color: #eee;
+      overflow-x: hidden;
     }
+
+    #ar-button {
+      background-image: url(../../assets/ic_view_in_ar_new_googblue_48dp.png);
+      background-repeat: no-repeat;
+      background-size: 20px 20px;
+      background-position: 12px 50%;
+      background-color: #fff;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      bottom: 132px;
+      padding: 0px 16px 0px 40px;
+      font-family: Roboto Regular, Helvetica Neue, sans-serif;
+      font-size: 14px;
+      color:#4285f4;
+      height: 36px;
+      line-height: 36px;
+      border-radius: 18px;
+      border: 1px solid #DADCE0;
+    }
+
+    #ar-button:active {
+      background-color: #E8EAED;
+    }
+
+    #ar-button:focus {
+      outline: none;
+    }
+
+    #ar-button:focus-visible {
+      outline: 1px solid #4285f4;
+    }
+
+    @keyframes circle {
+      from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
+      to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
+    }
+
+    @keyframes elongate {
+      from { transform: translateX(100px); }
+      to   { transform: translateX(-100px); }
+    }
+
+    model-viewer > #ar-prompt {
+      position: absolute;
+      left: 50%;
+      bottom: 175px;
+      animation: elongate 2s infinite ease-in-out alternate;
+      display: none;
+    }
+
+    model-viewer[ar-status="session-started"] > #ar-prompt {
+      display: block;
+    }
+
+    model-viewer > #ar-prompt > img {
+      animation: circle 4s linear infinite;
+    }
+
+    model-viewer > #ar-failure {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 175px;
+      display: none;
+    }
+
+    model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+      display: block;
+    }
+
+    .slider {
+      width: 100%;
+      text-align: center;
+      overflow: hidden;
+      position: absolute;
+      bottom: 16px;
+    }
+
+    .slides {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .slide {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #fff;
+      margin-right: 10px;
+      border-radius: 10px;
+      border: none;
+      display: flex;
+      cursor: pointer;
+    }
+
+    .slide.selected {
+      border: 2px solid #4285f4;
+    }
+
+    .slide:focus {
+      outline: none;
+    }
+
+    .slide:focus-visible {
+      outline: 1px solid #4285f4;
+    }
+
   </style>
 </head>
 <body>
-  <div class="container">
-    <model-viewer id="shoe" camera-controls touch-action="pan-y" height="1900px" width="1500px" src="./glb/MaterialsVariantsShoe.glb" tone-mapping="neutral" ar alt="Modelo 3D de um tênis">
-      <div class="controls">
-        <div>Variant: <select id="variant"></select></div>
-      </div>
+  <div class="REMOVER_model-viewer-container">
+    <model-viewer id="shoe" camera-controls touch-action="pan-y" src="./glb/MaterialsVariantsShoe.glb" tone-mapping="neutral" ar alt="Modelo 3D de um tênis">
       <div class="slider">
         <div class="slides">
-          <button class="slide selected" onclick="switchSrc(this, 'Chair')" style="background-image: url('./img/textures/texture-1.png');"></button>
-          <button class="slide" onclick="switchSrc(this, 'Mixer')" style="background-image: url('./img/textures/texture-2.png');"></button>
-          <button class="slide" onclick="switchSrc(this, 'GeoPlanter')" style="background-image: url('./img/textures/texture-3.png');"></button>
-          <button class="slide" onclick="switchSrc(this, 'ToyTrain')" style="background-image: url('./img/textures/texture-4.png');"></button>
-          <button class="slide" onclick="switchSrc(this, 'Canoe')" style="background-image: url('./img/textures/texture-5.png');"></button>
         </div>
       </div>
     </model-viewer>
   </div>
     <script>
     const modelViewerVariants = document.querySelector("model-viewer#shoe");
-    const select = document.querySelector('#variant'); 
+    const slides = document.querySelector('.slider .slides');
 
     modelViewerVariants.addEventListener('load', () => {
       const names = modelViewerVariants.availableVariants;
-      for (const name of names) {
-        const option = document.createElement('option');
-        option.value = name;
-        option.textContent = name;
-        select.appendChild(option);
-      }
-      // Adds a default option.
-      const option = document.createElement('option');
-        option.value = 'default';
-        option.textContent = 'Default';
-        select.appendChild(option);
-    });
 
-    select.addEventListener('input', (event) => {
-      modelViewerVariants.variantName = event.target.value === 'default' ? null : event.target.value;
+      for (const name of names) {
+        const btnSlide = document.createElement('button');
+        btnSlide.classList.add("slide");
+        btnSlide.value = name;
+        btnSlide.style.backgroundImage = `url('./img/textures/${name}.png')`;
+        slides.appendChild(btnSlide);
+
+        btnSlide.addEventListener("click", (event) => {
+          modelViewerVariants.variantName = event.target.value === 'default' ? null : event.target.value;
+        });
+      }
     });
     </script>
 </body>
