@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Model Viewer AR - VR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="animation-mixer.js"></script>
+  <script src="ar-shadows.js"></script>
+  <script src="model-viewer.js"></script>
+  <script src="background-gradient.js"></script>
+</head>
+<body>
+
+<a-scene
+  renderer="colorManagement: true;"
+  info-message="htmlSrc: #messageText"
+  model-viewer="gltfModel: #triceratops;"
+  xr-mode-ui="XRMode: xr">
+  <a-assets timeout="10000">
+    <a-asset-item id="triceratops"
+      src="./glTF/MaterialsVariantsShoe.gltf"
+      response-type="arraybuffer"></a-asset-item>
+
+    <img id="shadow" src="shadow.png"></img>
+  </a-assets>
+</a-scene>
+</body>
+</html>

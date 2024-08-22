@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+</head>
+<body>
+    <a-scene
+        raycaster="far: 100; objects: [class='link']"
+        cursor="rayOrigin: mouse"
+        camera-position
+        environment
+    >
+        <a-assets>
+            <img id="bedroomId" src="./img/Bedroom.jpg">
+            <img id="arrow" crossOrigin="anonymous" src="./img/arrow-right.png">
+        </a-assets>
+
+        <a-sky id="sky" src="#bedroomId" rotation="0 -130 0"></a-sky>
+        <a-plane data-href="index.html" src="#arrow" position="0.2 1.6 -3" rotation="0 0 60" height="0.5" width="0.5" class="link"
+            material="side: double; transparent: true; opacity: 1;"
+        ></a-plane>
+    </a-scene>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const links = document.querySelectorAll('.link');
+            links.forEach(link => {
+                link.addEventListener('click', function () {
+                    const href = link.getAttribute('data-href');
+                    window.location.href = href;
+                });
+            })
+        });
+    </script>
+</body>
+</html>
