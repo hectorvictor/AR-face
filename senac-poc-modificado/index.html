@@ -426,15 +426,12 @@
           //if (completedSections.length === document.querySelectorAll('.topico-scorm').length) {
           if (completedSections.length === contents.length) {
             scormSetLessonStatus("completed"); // Marca o curso como concluído se todos os tópicos forem concluídos
-            alert("Curso concluído! Status enviado ao LMS.");
-          } else {
-            alert(`Leitura do ${sectionId} concluída!`);
           }
         }
         //updateUI(); // Atualiza a interface
       }
 
-      function hasSuspendedData () {
+      function hasSuspendedData() {
         completedSections = getCompletedSections(); // Carrega as seções já concluídas
 
         if (completedSections.length > 0) {
@@ -482,7 +479,7 @@
       let currentIndex = 0; // Índice do conteúdo atual
       const fragmentsFolder = "content-fragments"
 
-      function reloadMainJs () {
+      function reloadMainJs() {
         const script = document.querySelector('[src*="webflow.js"]');
         script.remove();
         const newScript = document.createElement('script');
@@ -502,18 +499,15 @@
           let element = contents[index];
           console.log(element);
           console.log(index);
-          let shouldScroll = (element == lastViewedTopico) ? true : false;
-
+          let shouldScroll = (scormIsLessonComplete() == false && index != 0) ? true : false;
           //Encontrou o último tópico que o user viu da última vez que o material foi aberto
-          if (shouldScroll) {
-            console.log("achou")
-            console.log(element)
+          // se não for o ultimo
 
+          if (element == lastViewedTopico) {
             await loadTopico(shouldScroll, index);
             break;
           }
 
-          // se não for o ultimo
           await loadTopico(shouldScroll, index);
         }
       }

@@ -23,6 +23,20 @@ function scormAPITerminate() {
     }
 }
 
+function scormGetLessonStatus() {
+    var status = scormAPI.LMSGetValue("cmi.core.lesson_status");
+    return status;
+}
+
+function scormIsLessonComplete() {
+    let status = scormGetLessonStatus();
+    if (status === "not attempted" || status === "") {
+        return false;
+    }
+
+    return true;
+}
+
 function scormSetLessonStatus(status) {
     if (scormAPI != null) {
         var result = scormAPI.LMSSetValue("cmi.core.lesson_status", status);
