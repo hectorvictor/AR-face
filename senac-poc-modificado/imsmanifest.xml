@@ -11,7 +11,7 @@
     </metadata>
     <organizations default="organization">
         <organization identifier="organization">
-            <title>Curso SCORM com Múltiplos Tópicos</title>
+            <title>One page to rule them all</title>
             <item identifier="item_1" identifierref="resource_1">
                 <title>Tópico Completo em uma Página</title>
             </item>

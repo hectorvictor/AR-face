@@ -26,7 +26,6 @@ function scormAPITerminate() {
 function scormSetLessonStatus(status) {
     if (scormAPI != null) {
         var result = scormAPI.LMSSetValue("cmi.core.lesson_status", status);
-        console.log("Status da lição definido como: " + status + " - Resultado: " + result);
         scormAPI.LMSCommit(""); // Confirma as mudanças no LMS
     }
 }
@@ -34,7 +33,6 @@ function scormSetLessonStatus(status) {
 function scormSetCurrentTopic(topic) {
     if (scormAPI != null) {
         var result = scormAPI.LMSSetValue("cmi.core.lesson_location", topic);
-        console.log("Tópico atual definido como: " + topic + " - Resultado: " + result);
     }
 }
 
