@@ -1,8 +1,0 @@
-Model Information:
-* title:	Sunglasses
-* source:	https://sketchfab.com/3d-models/sunglasses-032bd321efb541f5b676a3fd4589550c
-* author:	robbotom4 (https://sketchfab.com/robbotom4)
-
-Model License:
-* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
-* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

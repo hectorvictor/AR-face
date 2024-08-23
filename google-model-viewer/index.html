@@ -127,13 +127,13 @@
       background-color: #fff;
       margin-right: 10px;
       border-radius: 10px;
-      border: solid 1px #004a8d;
+      border: solid 2px rgb(0 74 141 / 50%);
       display: flex;
-      cursor: pointer;      
+      cursor: pointer;
     }
 
     .slide.selected {
-      border: 2px solid #4285f4;
+      border: 3px solid #00498d;
     }
 
     .slide:focus {
@@ -170,6 +170,11 @@
         slides.appendChild(btnSlide);
 
         btnSlide.addEventListener("click", (event) => {
+          const btnSlideList = document.querySelectorAll('.slide');
+          btnSlideList.forEach(item => {
+            item.classList.remove('selected');
+          });
+          event.target.classList.add('selected');
           modelViewerVariants.variantName = event.target.value === 'default' ? null : event.target.value;
         });
       }
