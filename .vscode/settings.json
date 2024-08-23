@@ -1,7 +1,7 @@
 {
     "liveServer.settings.https": {
       "enable": true,
-      "cert": "/home/hector/dev/testeAr/certs/cert.pem",
-      "key": "/home/hector/dev/testeAr/certs/key.pem"
+      "cert": "/home/veiga/dev/AR-face/certs/cert.pem",
+      "key": "/home/veiga/dev/AR-face/certs/key.pem"
     }
 }
