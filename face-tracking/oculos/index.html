@@ -2,10 +2,34 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script> -->
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
+        // AFRAME.registerComponent('apply-texture', {
+        //   init: function () {
+        //     var el = this.el;
+        //     el.addEventListener('model-loaded', function () {
+        //       var object3D = el.getObject3D('mesh');
+        //       if (!object3D) { return; }
+
+        //       object3D.traverse(function (node) {
+        //         if (node.isMesh) {
+        //           // Verifica se o material existe e se não há uma textura aplicada
+        //           if (node.material && !node.material.map) {
+        //             // Aplica a textura manualmente
+        //             var textureLoader = new THREE.TextureLoader();
+        //             node.material.map = textureLoader.load('./models/glasses/model3/textures/material_diffuse.png');
+        //             node.material.needsUpdate = true;
+        //           }
+        //         }
+        //       });
+        //     });
+        //   }
+        // });
+
+
         const sceneEl = document.querySelector('a-scene');
         let arSystem;
         sceneEl.addEventListener('loaded', function () {
@@ -197,18 +221,19 @@
         <a-camera active="false" position="0 0 0" look-controls="enabled: false"></a-camera>
         <!-- head occluder -->
         <a-entity mindar-face-target="anchorIndex: 168">
+        
+          <!-- mindar-face-occluder -->
           <a-gltf-model mindar-face-occluder position="0 -0.3 0" rotation="1 0 0" scale="0.072 0.072 0.072" src="#headModel"></a-gltf-model>
-          <!-- <a-gltf-model mindar-face-occluder position="0 -0.3 0" rotation="0 0 0" scale="0.075 0.075 0.075" src="#headModel"></a-gltf-model> -->
         </a-entity>
 
         <a-entity mindar-face-target="anchorIndex: 168">
-          <a-gltf-model visible="false" class="glasses1-entity" rotation="0 270 -5" position="0.01 -0.5 0" scale="0.093 0.095 0.087" src="#glassesModel"></a-gltf-model>
+          <a-gltf-model visible="false" class="glasses1-entity" rotation="0 270 -2" position="0.02 -0.5 -0.01" scale="0.093 0.095 0.088" src="#glassesModel"></a-gltf-model>
         </a-entity>
         <a-entity mindar-face-target="anchorIndex: 168">
-          <a-gltf-model visible="false" class="glasses2-entity" rotation="0 89 5" position="0 -0.25 0" scale="0.065 0.05 0.058" src="#glassesModel2"></a-gltf-model>
+          <a-gltf-model visible="false" class="glasses2-entity" rotation="0 89 4" position="-0.02 -0.25 0" scale="0.06 0.05 0.058" src="#glassesModel2"></a-gltf-model>
         </a-entity>
         <a-entity mindar-face-target="anchorIndex: 168">
-          <a-gltf-model visible="false" class="glasses3-entity" rotation="5 0 0" position="-0.01 -0.08 -0.1" scale="4.8 4.8 8.52" src="#glassesModel3"></a-gltf-model>
+          <a-gltf-model visible="false" class="glasses3-entity" rotation="3 0 0" position="0 -0.08 0" scale="0.69 0.69 1.3" src="#glassesModel3"></a-gltf-model>
         </a-entity>
         <a-entity mindar-face-target="anchorIndex: 168">
           <a-gltf-model visible="false" class="glasses4-entity" rotation="-1.5 180 2" position="-0.01 -0.09 0.02" scale="0.22 0.19 0.23" src="#glassesModel4"></a-gltf-model>
