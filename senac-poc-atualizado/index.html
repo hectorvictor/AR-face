@@ -1079,8 +1079,9 @@
 
   <!-- SCRIPT DOS TOPICOS:-->
   <script>
-    let currentIndex = 0; // Índice do conteúdo atual
-    var contents = document.querySelectorAll('[data-topico]');
+   
+
+  
 
     async function initTopicos() {
       contents.forEach((item, index) => {
@@ -1166,6 +1167,9 @@
   </script>
   <script>
     window.onload = async function () {
+      var currentIndex = 0; // Índice do conteúdo atual
+      var contents = document.querySelectorAll('[data-topico]');
+      var maxScoreForEachExercise;
       scormAPIInitialize(); // Inicializa a comunicação SCORM
       if (!scormAPI) {
         console.error("Api do SCORM não encontrada.");

@@ -45,12 +45,6 @@ function scormSetLessonStatus(status) {
   }
 }
 
-function scormSetCurrentTopic(topic) {
-  if (scormAPI != null) {
-    var result = scormAPI.LMSSetValue("cmi.core.lesson_location", topic);
-  }
-}
-
 function getAPI() {
   var api = null;
   if (window.parent && window.parent != window) {
