@@ -119,13 +119,14 @@
       }
 
       .content__mindAR img:not(#b42).selected {
-        background-color: rgba(126, 209, 126, 0.774);
-        padding: 0px 5px;
+        /*background-color: rgba(126, 209, 126, 0.774);*/
+        background-color: rgba(126, 209, 126, 0.432);
+        padding: 0px 13px;
       }
 
       .content__mindAR img:not(#b42):hover {
-        background-color: rgba(126, 209, 126, 0.589);
-        padding: 0px 5px;
+        background-color: rgba(126, 209, 126, 0.432);
+        padding: 0px 13px;
       }
 
       .content__mindAR {
@@ -198,7 +199,7 @@
         <a-camera active="false" position="0 0 0" look-controls="enabled: false"></a-camera>
         <!-- head occluder -->
         <a-entity mindar-face-target="anchorIndex: 168">
-        
+
           <!-- mindar-face-occluder -->
           <a-gltf-model mindar-face-occluder position="0 -0.3 0" rotation="1 0 0" scale="0.072 0.072 0.072" src="#headModel"></a-gltf-model>
         </a-entity>
@@ -207,7 +208,7 @@
           <a-gltf-model visible="false" class="glasses1-entity" rotation="0 270 -2" position="0.02 -0.5 -0.01" scale="0.093 0.095 0.088" src="#glassesModel"></a-gltf-model>
         </a-entity>
         <a-entity mindar-face-target="anchorIndex: 168">
-          <a-gltf-model visible="false" class="glasses2-entity" rotation="0 89 4" position="-0.02 -0.25 0" scale="0.06 0.05 0.058" src="#glassesModel2"></a-gltf-model>
+          <a-gltf-model visible="false" class="glasses2-entity" rotation="0 89 4" position="0 -0.25 0" scale="0.06 0.05 0.058" src="#glassesModel2"></a-gltf-model>
         </a-entity>
         <a-entity mindar-face-target="anchorIndex: 168">
           <a-gltf-model visible="false" class="glasses3-entity" rotation="3 0 0" position="0 -0.08 0" scale="0.74 0.69 1.25" src="#glassesModel3"></a-gltf-model>
