@@ -1,11 +1,11 @@
 Model Information:
-* title:	Maya 3D modeling of Rayban glasses for children
-* source:	https://sketchfab.com/3d-models/maya-3d-modeling-of-rayban-glasses-for-children-07c7d65777054b758fba51a044ffd586
-* author:	Leonardo_g (https://sketchfab.com/Leonardo_g)
+* title:	Aviator sunglasses
+* source:	https://sketchfab.com/3d-models/aviator-sunglasses-00d1cb5aa82745228a3b764c97f867de
+* author:	Kimppo (https://sketchfab.com/Kimppo)
 
 Model License:
 * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Maya 3D modeling of Rayban glasses for children" (https://sketchfab.com/3d-models/maya-3d-modeling-of-rayban-glasses-for-children-07c7d65777054b758fba51a044ffd586) by Leonardo_g (https://sketchfab.com/Leonardo_g) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Aviator sunglasses" (https://sketchfab.com/3d-models/aviator-sunglasses-00d1cb5aa82745228a3b764c97f867de) by Kimppo (https://sketchfab.com/Kimppo) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
