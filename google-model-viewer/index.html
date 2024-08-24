@@ -19,10 +19,13 @@
     }
 
     model-viewer {
-      width: 100%;
-      height: 100%;
+      border-radius: 0;
+      width: 100vw;
+      height: 100vh;
       background-color: #eee;
-      overflow-x: hidden;
+      position: fixed;
+      top: 0;
+      left: 0;
     }
 
     #ar-button {
@@ -102,6 +105,7 @@
       overflow: hidden;
       position: absolute;
       bottom: 16px;
+      margin-left: 10px;
     }
 
     .slides {
@@ -123,13 +127,13 @@
       background-color: #fff;
       margin-right: 10px;
       border-radius: 10px;
-      border: none;
+      border: solid 2px rgb(0 74 141 / 50%);
       display: flex;
       cursor: pointer;
     }
 
     .slide.selected {
-      border: 2px solid #4285f4;
+      border: 3px solid #00498d;
     }
 
     .slide:focus {
@@ -166,6 +170,11 @@
         slides.appendChild(btnSlide);
 
         btnSlide.addEventListener("click", (event) => {
+          const btnSlideList = document.querySelectorAll('.slide');
+          btnSlideList.forEach(item => {
+            item.classList.remove('selected');
+          });
+          event.target.classList.add('selected');
           modelViewerVariants.variantName = event.target.value === 'default' ? null : event.target.value;
         });
       }
