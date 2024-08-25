@@ -104,38 +104,48 @@
         z-index: 2;
         background-color: #fff;
         box-shadow: 3px 3px 7px 0 rgba(0, 0, 0, 0.3);
-        background-color: rgb(239 239 239 / 95);
+        background-color: #e6e6e6;
         border-radius: 10px;
       }
 
       .content__mindAR img {
         cursor: pointer;
+        padding: 0px;
       }
 
       .content__mindAR img:not(#b42):not(#img-event) {
-        width: 35px;
-        height: 35px;
+        width: 60px;
+        height: 40px;
         object-fit: cover;
       }
 
       .content__mindAR img:not(#b42).selected {
         /*background-color: rgba(126, 209, 126, 0.774);*/
-        background-color: rgba(126, 209, 126, 0.432);
-        padding: 0px 13px;
+        background-color: #f29100;
+        transform: scale(1.6);
+        transition: transform .2s;
+        padding-left: 2px;
       }
 
       .content__mindAR img:not(#b42):hover {
-        background-color: rgba(126, 209, 126, 0.432);
-        padding: 0px 13px;
+        background-color: #f29100;
+
+        transform: scale(1.6);
+        transition: transform .2s;
       }
+
+      /* .content__mindAR img:not(#b42):hover {
+        border: solid 1px #f29100;
+        padding: 0px 13px;
+      } */
 
       .content__mindAR {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
-        height: 280px;
-        width: 70px;
+        height: 380px;
+        width: 100px;
         padding: 5px 0px;
       }
 
@@ -201,7 +211,7 @@
         <a-entity mindar-face-target="anchorIndex: 168">
 
           <!-- mindar-face-occluder -->
-          <a-gltf-model mindar-face-occluder position="0 -0.3 0" rotation="1 0 0" scale="0.072 0.072 0.072" src="#headModel"></a-gltf-model>
+          <a-gltf-model mindar-face-occluder position="0 -0.3 0" rotation="1 0 0" scale="0.071 0.071 0.071" src="#headModel"></a-gltf-model>
         </a-entity>
 
         <a-entity mindar-face-target="anchorIndex: 168">
