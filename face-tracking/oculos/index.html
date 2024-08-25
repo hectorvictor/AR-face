@@ -2,90 +2,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script> -->
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        const sceneEl = document.querySelector('a-scene');
-        let arSystem;
-        sceneEl.addEventListener('loaded', function () {
-          arSystem = sceneEl.systems["mindar-face-system"];
-          if (window !== window.parent) {
-            window.addEventListener('message', function(event) {
-              if(event.data == 'start') {
-                arSystem.start();
-              } else {
-                arSystem.stop();
-              }
-            });
-          } else {
-            arSystem.start();
-          }
-        });
-
-
-        const list = ["glasses1","glasses2", "glasses3", "glasses4", "glasses5", "glasses6"];
-        //const list = ["glasses1", "glasses2", "hat1", "hat2", "earring"];
-        const visibles = [false, false, false, false, false, false];
-        const setVisible = (button, entities, visible) => {
-          if (visible) {
-            button.classList.add("selected");
-          } else {
-            button.classList.remove("selected");
-          }
-            entities.forEach((entity) => {
-            entity.setAttribute("visible", visible);
-          });
-        }
-        list.forEach((item, index) => {
-          const button = document.querySelector("#" + item);
-          const entities = document.querySelectorAll("." + item + "-entity");
-          setVisible(button, entities, false);
-          button.addEventListener('click', () => {
-            list.forEach((otherItem, otherIndex) => {
-              if (otherIndex !== index) {
-                const otherButton = document.querySelector("#" + otherItem);
-                const otherEntities = document.querySelectorAll("." + otherItem + "-entity");
-                visibles[otherIndex] = false;
-                setVisible(otherButton, otherEntities, false);
-              }
-            });
-            visibles[index] = !visibles[index];
-            setVisible(button, entities, visibles[index]);
-          });
-        });
-
-        const startButton = document.querySelector("#example-start-button");
-        const stopButton = document.querySelector("#example-stop-button");
-        // arReady event triggered when ready
-        sceneEl.addEventListener("arReady", (event) => {
-          console.log("ar ready");
-        });
-        // detect target found
-        sceneEl.addEventListener("targetFound", event => {
-          console.log("target found");
-        });
-        // detect target lost
-        sceneEl.addEventListener("targetLost", event => {
-          console.log("target lost");
-        });
-        // arError event triggered when something went wrong. Mostly browser compatbility issue
-        sceneEl.addEventListener("arError", (event) => {
-          console.log("ar error");
-        });
-        /* startButton.addEventListener('click', () => {
-          arSystem.start(); // start AR
-          startButton.disabled = true;
-          stopButton.disabled = false;
-        });
-        stopButton.addEventListener('click', () => {
-          arSystem.stop(); // stop
-          startButton.disabled = false;
-          stopButton.disabled = true;
-        });*/
-      })
-    </script>
     <style>
       body {
         margin: 0;
@@ -177,17 +95,6 @@
           <img id="glasses4" src="../oculos/img/model4.png"/>
           <img id="glasses5" src="../oculos/img/model5.png"/>
           <img id="glasses6" src="../oculos/img/model6.png"/>
-          <!-- <div class="content__mindAR__border"></div> -->
-          <!-- <button id="example-stop-button">Stop</button> -->
-          <!-- <img id="hat1" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat/thumbnail.png"/> -->
-          <!-- <img id="hat2" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat2/thumbnail.png"/> -->
-          <!-- <img id="earring" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/earring/thumbnail.png"/> -->
-          <!-- <button title="Iniciar" class="button-menu" id="example-start-button">
-            <img id="img-event" height="25" src="./img/video.png">
-          </button> -->
-          <!-- <button title="Parar" class="button-menu" id="example-stop-button">
-            <img id="img-event" height="23" src="./img/stop.png">
-          </button> -->
           <img style="margin-top: 10px;" id="b42" src="../oculos/img/b42.svg"/>
         </div>
       </div>
@@ -200,18 +107,13 @@
           <a-asset-item id="glassesModel4" src="./models/glasses/model4/scene.gltf"></a-asset-item>
           <a-asset-item id="glassesModel5" src="./models/glasses/model5/scene.gltf"></a-asset-item>
           <a-asset-item id="glassesModel6" src="./models/glasses/model6/scene.gltf"></a-asset-item>
-          <!-- <a-asset-item id="hatModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat/scene.gltf"></a-asset-item>
-          <a-asset-item id="hatModel2" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat2/scene.gltf"></a-asset-item>
-          <a-asset-item id="glassesModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses/scene.gltf"></a-asset-item>
-          <a-asset-item id="glassesModel2" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/scene.gltf"></a-asset-item>
-          <a-asset-item id="earringModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/earring/scene.gltf"></a-asset-item> -->
         </a-assets>
         <a-camera active="false" position="0 0 0" look-controls="enabled: false"></a-camera>
         <!-- head occluder -->
         <a-entity mindar-face-target="anchorIndex: 168">
 
           <!-- mindar-face-occluder -->
-          <a-gltf-model mindar-face-occluder position="0 -0.3 0" rotation="1 0 0" scale="0.071 0.071 0.071" src="#headModel"></a-gltf-model>
+          <a-gltf-model mindar-face-occluder position="0 -0.3 0" rotation="1 0 0" scale="0.072 0.072 0.072" src="#headModel"></a-gltf-model>
         </a-entity>
 
         <a-entity mindar-face-target="anchorIndex: 168">
@@ -234,5 +136,75 @@
         </a-entity>
       </a-scene>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const sceneEl = document.querySelector('a-scene');
+        let arSystem;
+        sceneEl.addEventListener('loaded', function () {
+          arSystem = sceneEl.systems["mindar-face-system"];
+          if (window !== window.parent) {
+            window.addEventListener('message', function(event) {
+              if(event.data == 'start') {
+                arSystem.start();
+              } else {
+                arSystem.stop();
+              }
+            });
+          } else {
+            arSystem.start();
+          }
+        });
+
+        const list = ["glasses1","glasses2", "glasses3", "glasses4", "glasses5", "glasses6"];
+        //const list = ["glasses1", "glasses2", "hat1", "hat2", "earring"];
+        const visibles = [false, false, false, false, false, false];
+        const setVisible = (button, entities, visible) => {
+          if (visible) {
+            button.classList.add("selected");
+          } else {
+            button.classList.remove("selected");
+          }
+            entities.forEach((entity) => {
+            entity.setAttribute("visible", visible);
+          });
+        }
+        list.forEach((item, index) => {
+          const button = document.querySelector("#" + item);
+          const entities = document.querySelectorAll("." + item + "-entity");
+          setVisible(button, entities, false);
+          button.addEventListener('click', () => {
+            list.forEach((otherItem, otherIndex) => {
+              if (otherIndex !== index) {
+                const otherButton = document.querySelector("#" + otherItem);
+                const otherEntities = document.querySelectorAll("." + otherItem + "-entity");
+                visibles[otherIndex] = false;
+                setVisible(otherButton, otherEntities, false);
+              }
+            });
+            visibles[index] = !visibles[index];
+            setVisible(button, entities, visibles[index]);
+          });
+        });
+
+        const startButton = document.querySelector("#example-start-button");
+        const stopButton = document.querySelector("#example-stop-button");
+        // arReady event triggered when ready
+        sceneEl.addEventListener("arReady", (event) => {
+          console.log("ar ready");
+        });
+        // detect target found
+        sceneEl.addEventListener("targetFound", event => {
+          console.log("target found");
+        });
+        // detect target lost
+        sceneEl.addEventListener("targetLost", event => {
+          console.log("target lost");
+        });
+        // arError event triggered when something went wrong. Mostly browser compatbility issue
+        sceneEl.addEventListener("arError", (event) => {
+          console.log("ar error");
+        });
+      })
+    </script>
   </body>
 </html>
