@@ -5,13 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <title>Troca de Cor do Tênis</title>
-
-  <style>
-    .REMOVER_model-viewer-container {
-      width: 800px;
-      height: 800px;
-    }
-  </style>
   <style>
     /* This keeps child nodes hidden while the element loads */
     :not(:defined) > * {
@@ -147,15 +140,13 @@
   </style>
 </head>
 <body>
-  <div class="REMOVER_model-viewer-container">
-    <model-viewer id="shoe" camera-controls touch-action="pan-y" src="./glb/MaterialsVariantsShoe.glb" tone-mapping="neutral" ar alt="Modelo 3D de um tênis">
-      <div class="slider">
-        <div class="slides">
-        </div>
+  <model-viewer id="shoe" camera-controls touch-action="pan-y" src="./glb/MaterialsVariantsShoe.glb" tone-mapping="neutral" ar alt="Modelo 3D de um tênis">
+    <div class="slider">
+      <div class="slides">
       </div>
-    </model-viewer>
-  </div>
-    <script>
+    </div>
+  </model-viewer>
+  <script>
     const modelViewerVariants = document.querySelector("model-viewer#shoe");
     const slides = document.querySelector('.slider .slides');
 
@@ -179,7 +170,7 @@
         });
       }
     });
-    </script>
+  </script>
 </body>
 </html>
 
