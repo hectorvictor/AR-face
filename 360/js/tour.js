@@ -1,119 +1,115 @@
+const b42Tour = {
+  images: [],
+  background: {},
+  arrows: [],
+
+  setImages: function (imagePaths) {
+    if(imagePaths == undefined || imagePaths == null || !Array.isArray(imagePaths)) {
+      throw 'O argumento deve ser um array de objetos.';
+    }
+
+    if (imagePaths.length === 0) {
+      throw 'O array não pode estar vazio.';
+    }
+
+    if(!Array.from(imagePaths).some(item => item.id && item.src)) {
+      throw `Todos os itens do array devem ser objetos com as propriedades obrigatórias "id" e "src".`;
+    }
+
+    this.images = imagePaths;
+  },
+  setBackgroud: function (path) {
+    if(path == undefined || path == null || typeof path !== 'object' || Array.isArray(path)) {
+      throw 'O argumento deve ser um objetos.';
+    }
+
+    if(!path.id || !path.src) {
+      throw `Objeto com as propriedades obrigatórias "id" e "src".`;
+    }
+
+    this.background = path;
+  },
+  isPropsValid: function (items) {
+    if (items.length === 0) {
+      throw 'O campo planes não pode estar vazio.';
+    }
+
+    Array.from(items).map(item => {
+      if(!item.hasOwnProperty("dataImg") || typeof item.dataImg !== "string") {
+        throw `O campo 'dataImg' não existe!`;
+      }
+
+      if(!item.hasOwnProperty("position") || typeof item.position !== "string") {
+        throw `O campo 'position' não existe!`;
+      }
+
+      if(!item.hasOwnProperty("rotation") || typeof item.rotation !== "string") {
+        throw `O campo 'rotation' não existe!`;
+      }
+
+      if(!item.hasOwnProperty("width") || typeof item.width !== "string") {
+        throw `O campo 'width' não existe!`;
+      }
+
+      if(!item.hasOwnProperty("height") || typeof item.height !== "string") {
+        throw `O campo 'height' não existe!`;
+      }
+
+    })
+
+
+  },
+  setArrows: function (arrowConfig) {
+    try {
+      if(arrowConfig == undefined || arrowConfig == null || !Array.isArray(arrowConfig)) {
+        throw 'O argumento deve ser um array de objetos.';
+      }
+
+      Array.from(arrowConfig).map(item => {
+        if(!item.index || !item.planes) {
+          throw 'Objeto com as propriedades obrigatórias "index" e "planes".';
+        }
+
+        this.isPropsValid(item.planes);
+      });
+
+    } catch (error) {
+      return;
+      console.log(error);
+    }
+
+    this.arrows = arrowConfig;
+  }
+};
+
 AFRAME.registerComponent('popup-tour', {
   init: function () {
     this.el.addEventListener("loaded", e => {
       const links = this.el.querySelectorAll('.link');
-      const sceneEl = document.querySelector('a-scene');
       let assets = document.createElement('a-assets');
       this.sky = document.createElement('a-sky');
 
-      this.listMap = [{
-          index: '01',
-          planes: [{
-              dataImg: './img/03.jpg',
-              position: '-5 -4 8',
-              rotation: '90 210 -110',
-              height: '3',
-              width: '3'
-            },
-            {
-              dataImg: './img/04.jpg',
-              position: '-2 -4 -9',
-              rotation: '90 210 -20',
-              height: '3',
-              width: '3'
-            },
-          ]
-        },
-        {
-          index: '02',
-          planes: [{
-              dataImg: './img/03.jpg',
-              position: '30 -10 -10',
-              rotation: '100 -45 165',
-              height: '7',
-              width: '5'
-            },
-            {
-              dataImg: './img/05.jpg',
-              position: '-3 -4 -8',
-              rotation: '100 -45 115',
-              height: '4',
-              width: '2'
-            },
-          ]
-        },
-        {
-          index: '03',
-          planes: [{
-              dataImg: './img/02.jpg',
-              position: '19 -10 -10',
-              rotation: '100 -45 165',
-              height: '7',
-              width: '5'
-            },
-            {
-              dataImg: './img/01.jpg',
-              position: '-4 -4 6',
-              rotation: '100 -45 0',
-              height: '4',
-              width: '2'
-            },
-          ]
-        },
-        {
-          index: '04',
-          planes: [{
-              dataImg: './img/05.jpg',
-              position: '13 -10 -10',
-              rotation: '100 -45 155',
-              height: '7',
-              width: '5'
-            },
-            {
-              dataImg: './img/01.jpg',
-              position: '-8 -4 1',
-              rotation: '100 -45 10',
-              height: '4',
-              width: '2'
-            },
-          ]
-        },
-        {
-          index: '05',
-          planes: [{
-              dataImg: './img/04.jpg',
-              position: '-3 -5 7',
-              rotation: '100 -45 10',
-              height: '4',
-              width: '2'
-            },
-            {
-              dataImg: './img/02.jpg',
-              position: '-15 -15 -15',
-              rotation: '100 -45 105',
-              height: '10',
-              width: '7'
-            },
-          ]
-        }
-      ]
+      // imagem do fundo
       this.img = document.createElement('img');
-      this.img.setAttribute('src', './img/02.jpg');
-      this.img.id = 'tour-02';
+      this.img.setAttribute('src', b42Tour.background.src);
+      this.img.id = b42Tour.background.id;
       assets.appendChild(this.img);
 
-      let arrow = document.createElement('img');
-      arrow.setAttribute('src', './img/fast-forward.png');
-      arrow.id = 'arrow';
-      arrow.setAttribute('crossOrigin', 'anonymous');
-      assets.appendChild(arrow);
+      //imagens adicionadas
+      b42Tour.images.forEach(item => {
+        let imagem = document.createElement('img');
+        imagem.setAttribute('src', item.src);
+        imagem.id = item.id;
+        imagem.setAttribute('crossOrigin', 'anonymous');
+        assets.appendChild(imagem);
+      });
 
       this.sky.id = 'sky';
       this.sky.setAttribute('src', '#tour-02');
       this.sky.setAttribute('rotation', '0 -130 0');
 
-      sceneEl.prepend(assets);
-      sceneEl.appendChild(this.sky);
+      this.el.sceneEl.prepend(assets);
+      this.el.sceneEl.appendChild(this.sky);
 
       this.onClick = this.onClick.bind(this);
 
@@ -123,9 +119,8 @@ AFRAME.registerComponent('popup-tour', {
     });
   },
   updatePlane: function (index) {
-    const map = Array.from(this.listMap).find(item => item.index == index);
+    const map = Array.from(b42Tour.arrows).find(item => item.index == index);
     this.el.querySelectorAll('.link').forEach(link => link.remove());
-    const sceneEl = document.querySelector('a-scene');
     map.planes.forEach(item => {
       let plane = document.createElement('a-plane');
       plane.setAttribute('src', '#arrow');
@@ -173,3 +168,5 @@ AFRAME.registerComponent('popup-tour', {
     };
   }
 });
+
+export default b42Tour;
