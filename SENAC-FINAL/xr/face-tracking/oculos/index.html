@@ -178,13 +178,21 @@
         }
       }
 
+      function addPageWrapper() {
+        //adicionar aqui a div.page-wrapper
+        //selecionar a div .try-on-container e jogar ela dentro da page wrapper
+        //a page wrapper deve ter css para background image e padding all para deixar a camera em um quadradinho menor
+      }
+
       document.querySelector(".button-menu").addEventListener("click", toggleMenu);
       document.addEventListener("DOMContentLoaded", function() {
+        const isInIframe = window !== window.parent;
+
         const sceneEl = document.querySelector('a-scene');
         let arSystem;
         sceneEl.addEventListener('loaded', function () {
           arSystem = sceneEl.systems["mindar-face-system"];
-          if (window !== window.parent) {
+          if (isInIframe) {
             window.addEventListener('message', function(event) {
               if(event.data == 'start') {
                 arSystem.start();
@@ -251,6 +259,10 @@
             alert("Câmera não encontrada ou sem permissão de uso");
           }
         });
+
+        if (isInIframe) {
+          addPageWrapper();
+        }
       })
     </script>
   </body>
