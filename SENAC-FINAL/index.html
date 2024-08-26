@@ -130,7 +130,39 @@ input[type="radio"]:checked + .radio-button-label .seletor {
     margin-left: 10px;
     display: flex;
 }
-</style>
+  </style>
+
+  <!-- confirm camera -->
+  <style>
+    /* Estilos básicos para o confirm dialog personalizado */
+    .confirm-allow-camera {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .confirm-allow-camera-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .confirm-allow-camera-buttons {
+      margin-top: 20px;
+    }
+    .confirm-allow-camera-buttons button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+  </style>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -2060,21 +2092,33 @@ overflow-wrap: break-word;
           <!-- scripts player audiobook -->
           <script src="https://assets.eadstock.com.br/go/static/libs/b42-audio-player/b42-audio-player.min.js" data-css="unipar"></script>
           <script>
-  AP.init({
-    container:'#audiolivro',
-    playList: [
-      {'title': 'Tópico 1', 'file': 'audios/A1-T1.mp3'},
-      {'title': 'Tópico 2', 'file': 'audios/A1-T2.mp3'},
-      {'title': 'Tópico 3', 'file': 'audios/A1-T3.mp3'},
-    ]
-  });
-</script>
+            AP.init({
+              container:'#audiolivro',
+              playList: [
+                {'title': 'Tópico 1', 'file': 'audios/A1-T1.mp3'},
+                {'title': 'Tópico 2', 'file': 'audios/A1-T2.mp3'},
+                {'title': 'Tópico 3', 'file': 'audios/A1-T3.mp3'},
+              ]
+            });
+          </script>
         </div>
       </div>
       <div data-hide="1" class="rodape-final">
         <div class="design-b42">
           <div class="text-block-27">©Senac - Todos direitos reservados</div>
         </div>
+      </div>
+    </div>
+  </div>
+  <div id="confirmAllowCamera" class="confirm-allow-camera">
+    <div class="confirm-allow-camera-content">
+      <p>Oops, sem acesso à câmera!</p>
+      <div>Isso pode ter ocorrido por falta conceder permissão à câmera.</div>
+      <div>Caso seja isso, cancele esta mensagem e habilite a permissão.</div>
+      <div>Ou então clique para abrir em nova aba</div>
+      <div class="confirm-allow-camera-buttons">
+        <button id="confirmCameraCancelar">Cancelar</button>
+        <button id="confirmCameraNovaAba">Ok, abrir em nova aba</button>
       </div>
     </div>
   </div>
@@ -2109,17 +2153,34 @@ overflow-wrap: break-word;
     const btnOculosOpen = document.querySelector('#btn-oculos-open');
     const btnOculosClose = document.querySelector('#btn-oculos-close');
     const iframeOculos = document.querySelector('#iframe-oculos');
-    btnOculosOpen.addEventListener('click', () => {
+
+    function openIframeOculos() {
       iframeOculos.style.display = 'block';
       btnOculosClose.style.display = 'block';
       btnOculosOpen.style.display = 'none';
       iframeOculos.contentWindow.postMessage('start', '*');
-    });
-    btnOculosClose.addEventListener('click', () => {
+    }
+
+    function closeframeOculos() {
       btnOculosClose.style.display = 'none';
       btnOculosOpen.style.display = 'block';
       iframeOculos.style.display = 'none';
       iframeOculos.contentWindow.postMessage('stop', '*');
+    }
+
+    btnOculosOpen.addEventListener('click', () => {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+          openIframeOculos();
+        })
+        .catch(function(error) {
+          console.error('Permissão da câmera negada ou ocorreu um erro:', error);
+          showConfirmAllowCamera();
+        });
+
+    });
+    btnOculosClose.addEventListener('click', () => {
+      closeframeOculos();
     });
   </script>
   <script src="js/scorm_api.js"></script>
@@ -2360,19 +2421,26 @@ overflow-wrap: break-word;
     };
   </script>
   <script>
-    function requestCameraPermission() {
-      return navigator.mediaDevices.getUserMedia({ video: true });
+    // Função para mostrar o confirm dialog personalizado
+    function showConfirmAllowCamera() {
+      document.querySelector('#confirmAllowCamera').style.display = 'flex';
     }
-    requestCameraPermission()
-      .then(function(stream) {
-        console.log('Permissão da câmera concedida.');
-        // A permissão foi concedida, agora carregue o iframe
-        loadIframe();
-      })
-      .catch(function(error) {
-        console.error('Permissão da câmera negada ou ocorreu um erro:', error);
-        alert('Não foi possível acessar a câmera. Por favor, conceda permissão para continuar.');
-      });
+
+    // Função para esconder o confirm dialog personalizado
+    function hideConfirmAllowCamera() {
+      document.querySelector('#confirmAllowCamera').style.display = 'none';
+    }
+
+    // Ações dos botões
+    document.querySelector('#confirmCameraNovaAba').addEventListener('click', function() {
+      hideConfirmAllowCamera();
+      window.open('./xr/face-tracking/oculos/index.html', '_blank');
+    });
+
+    document.querySelector('#confirmCameraCancelar').addEventListener('click', function() {
+      hideConfirmAllowCamera();
+    });
   </script>
+
 </body>
 </html>
