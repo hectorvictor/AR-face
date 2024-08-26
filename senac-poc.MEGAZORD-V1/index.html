@@ -1,6 +1,7 @@
 <!DOCTYPE html><!--  Last Published: Sun Aug 25 2024 21:46:09 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="6696cd25c0c26fb64c853ef1" data-wf-site="6696cd25c0c26fb64c853eec">
 <head>
+  <meta data-conteudo="experiencia-do-cliente"/>
   <meta charset="utf-8">
   <title>Aula 01</title>
   <meta content="Aula 01" property="og:title">
@@ -980,7 +981,7 @@
                             &#10006;
                           </button>
                         </div>
-                        <iframe class="xr-iframe" id="iframe-oculos" src="./xr/face-tracking/oculos/index.html"></iframe>
+                        <iframe class="xr-iframe" id="iframe-oculos" src="./xr/face-tracking/oculos/index.html" allow="camera"></iframe>
                       </div>
                     </div>
                   </div>
@@ -1982,7 +1983,7 @@
         </div>
       </div>
       <div class="button-wrapper">
-        <a id="load-next" data-finish-text="Concluir" href="#" class="button-scorm w-button">AVANçAR</a>
+        <a id="load-next" data-finish-text="Concluir" href="#" class="button-scorm w-button">AVANÇAR</a>
       </div>
       <div>
         <div class="w-embed w-script">
@@ -2039,6 +2040,7 @@
   <!-- código dos boxes  -->
   <script src="https://go.eadstock.com.br/a/lib?p=go.min.js"></script>
   <!--  script oculos  -->
+  <!--    -->
   <script type="text/javascript">
     const btnOculosOpen = document.querySelector('#btn-oculos-open');
     const btnOculosClose = document.querySelector('#btn-oculos-close');
@@ -2058,7 +2060,7 @@
   </script>
   <script src="js/scorm_api.js"></script>
   <script>
-    var currentIndex = 0; // Índice do conteúdo atual
+    var currentIndex = 0;
     var maxScoreExercises = 0;
     var contents = document.querySelectorAll('[data-topico]');
     var topicosComAtividades = getTopicosComAtividades();
@@ -2107,16 +2109,8 @@
       const topicoIndice = topico.getAttribute('data-topico');
       const isCorrect = checkedRadio.value;
       const node = checkedRadio.id;
-      console.log("Node para restaurar:")
-      console.log(node);
-      console.log(topico);
-      console.log(topicoIndice);
-      console.log('Correto:', isCorrect);
-      console.log("Form:");
+
       let updatedSection = scormRecordQuestionario(topicoIndice, node, isCorrect);
-      console.log("Seção atualizada:")
-      console.log(updatedSection)
-      // Se estiver correto, passa pro proximo
       if (isCorrect == 1) {
         showFeedback(div, '.feedback-certo');
         disableForm(form);
@@ -2124,13 +2118,11 @@
         return;
       }
 
-      // Se já tiver usado mais de 2 tentativas e NÃO ESTA CORRETO:
       if (updatedSection.triesUsed >= 2) {
         showFeedback(div, '.feedback-errado');
         disableForm(form);
         showLoadNextButton();
       } else {
-        // Se está errado mas tem mais de duas tentativas, mostra o botao de tentar novamente
         disableForm(form);
         showFeedback(div, '.feedback-tentar-novamente');
         showBtn(div, '.btn-tentar-novamente');
@@ -2152,7 +2144,6 @@
       document.querySelector('#load-next').addEventListener('click', async function () {
         const btnLoadNext = this;
 
-        // Verifica se não há mais conteúdos para carregar
         if (currentIndex >= contents.length) {
           btnLoadNext.style.display = 'none';
           return;
@@ -2169,16 +2160,7 @@
       btnLoadNext.style.display = 'block';
     }
 
-
     async function initQuizButtons() {
-      // Adaptar:
-      // document.querySelectorAll('div.atividades-box-content input[type="radio"]').forEach(function (item) {
-      //   item.addEventListener('click', function (e) {
-      //     // adicionar scorm aqui
-      //     showBtn(e.target.closest('div.atividades-box-content'), '.btn-resposta');
-      //   });
-      // });
-
       document.querySelectorAll('.btn-resposta').forEach(function (item) {
         item.addEventListener('click', function (e) {
           responder(e.target.closest('div.atividades-box-content'));
@@ -2200,13 +2182,11 @@
           radio.addEventListener('change', handleAlternativaSelection);
         })
       });
-
     }
 
     function getTopicosComAtividades() {
       let topicosWithAtividades = [];
       contents.forEach((item, index) => {
-        // pega a classe que engloba esse topico
         let container = item.closest('.topico-container');
         let atividades = container.querySelector('.section-atividades');
         console.log("Atividades container:")
@@ -2218,16 +2198,9 @@
 
       return topicosWithAtividades;
     }
-
-
     async function initAnsweredQuestionsAgain() {
       completedSections.forEach((item, index) => {
-        console.log("Iniciando reinicio de questoes");
-        console.log(item);
         if (item.questionarioCompleto == true) {
-          console.log("Inicializando as questoes:");
-          console.log(item);
-          console.log(index);
           let nodeToMark = item.node;
           let topicoId = item.id;
           const topicoContainer = document.querySelector(`.topico-container[data-topico=${topicoId}]`);
@@ -2245,19 +2218,16 @@
             }
           });
           correctButton.checked = true;
-          // Se ele acertou a questão, desabilita todo o mecanismo de tentativas desse quiz e mostra o feedback
           if (item.score > 0) {
             showFeedback(div, '.feedback-certo');
             disableForm(form);
             return;
           }
 
-          // Se já tiver usado mais de 2 tentativas e NÃO ESTA CORRETO:
           if (item.triesUsed >= 2) {
             showFeedback(div, '.feedback-errado');
             disableForm(form);
           } else {
-            // Se está errado mas tem mais de duas tentativas, mostra o botao de tentar novamente
             disableForm(form);
             showFeedback(div, '.feedback-tentar-novamente');
             showBtn(div, '.btn-tentar-novamente');
@@ -2290,8 +2260,6 @@
 
     async function loadLastTopicoViewed() {
       let lastViewedTopico = getLastViewedTopico();
-      console.log("Topico a procurar:")
-      console.log(lastViewedTopico)
       for (let index = 0; index < contents.length; index++) {
         let element = contents[index];
         console.log(element);
@@ -2304,15 +2272,7 @@
         } else {
           shouldScroll = true;
         }
-        console.log("Element:");
-        console.log(element.dataset.topico);
-        console.log("LAST VIEWED:")
-        console.log(lastViewedTopico)
-        console.log("Lesson complete")
-        console.log(scormIsLessonComplete())
 
-        console.log("should scroll")
-        console.log(shouldScroll);
         //Encontrou o último tópico que o user viu da última vez que o material foi aberto
         // se não for o ultimo
 
