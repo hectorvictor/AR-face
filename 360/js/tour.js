@@ -4,30 +4,41 @@ const b42Tour = {
   arrows: [],
 
   setImages: function (imagePaths) {
-    if(imagePaths == undefined || imagePaths == null || !Array.isArray(imagePaths)) {
-      throw 'O argumento deve ser um array de objetos.';
-    }
+    try {
+      if(imagePaths == undefined || imagePaths == null || !Array.isArray(imagePaths)) {
+        throw 'O argumento deve ser um array de objetos.';
+      }
 
-    if (imagePaths.length === 0) {
-      throw 'O array não pode estar vazio.';
-    }
+      if (imagePaths.length === 0) {
+        throw 'O array não pode estar vazio.';
+      }
 
-    if(!Array.from(imagePaths).some(item => item.id && item.src)) {
-      throw `Todos os itens do array devem ser objetos com as propriedades obrigatórias "id" e "src".`;
-    }
+      if(!Array.from(imagePaths).some(item => item.id && item.src)) {
+        throw `Todos os itens do array devem ser objetos com as propriedades obrigatórias "id" e "src".`;
+      }
 
-    this.images = imagePaths;
+      this.images = imagePaths;
+
+    } catch (error) {
+      throw error;
+    }
   },
   setBackgroud: function (path) {
-    if(path == undefined || path == null || typeof path !== 'object' || Array.isArray(path)) {
-      throw 'O argumento deve ser um objetos.';
+    try {
+      if(path == undefined || path == null || typeof path !== 'object' || Array.isArray(path)) {
+        throw 'O argumento deve ser um objetos.';
+      }
+
+      if(!path.id || !path.src) {
+        throw `Objeto com as propriedades obrigatórias "id" e "src".`;
+      }
+
+      this.background = path;
+
+    } catch (error) {
+      throw error;
     }
 
-    if(!path.id || !path.src) {
-      throw `Objeto com as propriedades obrigatórias "id" e "src".`;
-    }
-
-    this.background = path;
   },
   isPropsValid: function (items) {
     if (items.length === 0) {
@@ -60,7 +71,12 @@ const b42Tour = {
 
   },
   setArrows: function (arrowConfig) {
+
     try {
+      if (arrowConfig.length === 0) {
+        throw 'O campo arrows não pode estar vazio.';
+      }
+      
       if(arrowConfig == undefined || arrowConfig == null || !Array.isArray(arrowConfig)) {
         throw 'O argumento deve ser um array de objetos.';
       }
@@ -73,12 +89,12 @@ const b42Tour = {
         this.isPropsValid(item.planes);
       });
 
+      this.arrows = arrowConfig;
+
     } catch (error) {
-      return;
-      console.log(error);
+      throw error;
     }
 
-    this.arrows = arrowConfig;
   }
 };
 
@@ -120,6 +136,10 @@ AFRAME.registerComponent('popup-tour', {
   },
   updatePlane: function (index) {
     const map = Array.from(b42Tour.arrows).find(item => item.index == index);
+    if(b42Tour.arrows.length == 0 || !map) {
+      return;
+    }
+
     this.el.querySelectorAll('.link').forEach(link => link.remove());
     map.planes.forEach(item => {
       let plane = document.createElement('a-plane');
