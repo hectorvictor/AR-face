@@ -71,12 +71,11 @@ const b42Tour = {
 
   },
   setArrows: function (arrowConfig) {
-
     try {
       if (arrowConfig.length === 0) {
         throw 'O campo arrows não pode estar vazio.';
       }
-      
+
       if(arrowConfig == undefined || arrowConfig == null || !Array.isArray(arrowConfig)) {
         throw 'O argumento deve ser um array de objetos.';
       }
@@ -100,6 +99,18 @@ const b42Tour = {
 
 AFRAME.registerComponent('popup-tour', {
   init: function () {
+    this.loader = document.createElement('a-plane');
+    this.loader.setAttribute('position', '0 1.6 -2');
+    this.loader.setAttribute('width', '1');
+    this.loader.setAttribute('height', '0.2');
+    this.loader.setAttribute('color', '#000');
+    this.loader.setAttribute('text', {
+      value: 'Carregando...',
+      align: 'center',
+      color: '#fff',
+      width: 3
+    });
+    this.el.sceneEl.appendChild(this.loader);
     this.el.addEventListener("loaded", e => {
       const links = this.el.querySelectorAll('.link');
       let assets = document.createElement('a-assets');
@@ -132,6 +143,10 @@ AFRAME.registerComponent('popup-tour', {
       let path = this.img.getAttribute('src');
       path = path.split('/').pop().split('.')[0];
       this.updatePlane(path);
+
+      this.img.onload = () => {
+        this.el.sceneEl.removeChild(this.loader);
+      };
     });
   },
   updatePlane: function (index) {
