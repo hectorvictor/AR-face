@@ -120,160 +120,128 @@
           <button class="button-menu">
             Modelos <span class="chevron">&#9660;</span>
           </button>
-          <div class="model-options">
-            <img id="glasses1" src="../oculos/img/model1.png"/>
-            <img id="glasses2" src="../oculos/img/model2.png"/>
-            <img id="glasses3" src="../oculos/img/model3.png"/>
-            <img id="glasses4" src="../oculos/img/model4.png"/>
-            <img id="glasses5" src="../oculos/img/model5.png"/>
-            <img id="glasses6" src="../oculos/img/model6.png"/>
-            <img style="margin-top: 10px;" id="b42" src="../oculos/img/b42.svg"/>
-          </div>
+          <div class="model-options"></div>
         </div>
         <a-scene mindar-face="autoStart: false" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-          <a-assets>
-            <a-asset-item id="headModel" src="./models/headModel/headOccluder.glb"></a-asset-item>
-            <a-asset-item id="glassesModel" src="./models/glasses/model1/scene.gltf"></a-asset-item>
-            <a-asset-item id="glassesModel2" src="./models/glasses/model2/scene.gltf"></a-asset-item>
-            <a-asset-item id="glassesModel3" src="./models/glasses/model3/scene.gltf"></a-asset-item>
-            <a-asset-item id="glassesModel4" src="./models/glasses/model4/scene.gltf"></a-asset-item>
-            <a-asset-item id="glassesModel5" src="./models/glasses/model5/scene.gltf"></a-asset-item>
-            <a-asset-item id="glassesModel6" src="./models/glasses/model6/scene.gltf"></a-asset-item>
-          </a-assets>
           <a-camera active="false" position="0 0 0" look-controls="enabled: false"></a-camera>
-  
-          <a-entity mindar-face-target="anchorIndex: 168">
-            <a-gltf-model mindar-face-occluder position="0 -0.3 0" rotation="1 0 0" scale="0.072 0.072 0.072" src="#headModel"></a-gltf-model>
-          </a-entity>
-  
-          <a-entity mindar-face-target="anchorIndex: 168">
-            <a-gltf-model visible="false" class="glasses1-entity" rotation="0 270 -2" position="0.02 -0.5 -0.01" scale="0.093 0.095 0.088" src="#glassesModel"></a-gltf-model>
-          </a-entity>
-          <a-entity mindar-face-target="anchorIndex: 168">
-            <a-gltf-model visible="false" class="glasses2-entity" rotation="0 89 4" position="0 -0.25 0" scale="0.06 0.05 0.058" src="#glassesModel2"></a-gltf-model>
-          </a-entity>
-          <a-entity mindar-face-target="anchorIndex: 168">
-            <a-gltf-model visible="false" class="glasses3-entity" rotation="3 0 0" position="0 -0.08 0" scale="0.74 0.69 1.25" src="#glassesModel3"></a-gltf-model>
-          </a-entity>
-          <a-entity mindar-face-target="anchorIndex: 168">
-            <a-gltf-model visible="false" class="glasses4-entity" rotation="6 0 0" position="0 0.03 -0.2" scale="0.0415 0.0415 0.052" src="#glassesModel4"></a-gltf-model>
-          </a-entity>
-          <a-entity mindar-face-target="anchorIndex: 168">
-            <a-gltf-model visible="false" class="glasses5-entity" rotation="2 0 0" position="0 -0.2 -0.58" scale="0.76 0.76 0.82" src="#glassesModel5"></a-gltf-model>
-          </a-entity>
-          <a-entity mindar-face-target="anchorIndex: 168">
-            <a-gltf-model visible="false" class="glasses6-entity" rotation="5 0 0" position="0 -0.32 -0.21" scale="0.074 0.074 0.102" src="#glassesModel6"></a-gltf-model>
-          </a-entity>
+          <a-entity model-glasses></a-entity>
         </a-scene>
       </div>
     </div>
-    <script>
-      function toggleMenu() {
-        const panel = document.getElementById('optionsPanel');
-        panel.classList.toggle('expanded');
+    <script type="module">
+      import b42Glasse from './js/glasse.js';
+      const listOptions = [
+        {
+          id: 'glasses1',
+          src: '../oculos/img/model1.png',
+          style: '',
+          visible: false
+        },
+        {
+          id: 'glasses2',
+          src: '../oculos/img/model2.png',
+          style: '',
+          visible: false
+        },
+        {
+          id: 'glasses3',
+          src: '../oculos/img/model3.png',
+          style: '',
+          visible: false
+        },
+        {
+          id: 'glasses4',
+          src: '../oculos/img/model4.png',
+          style: '',
+          visible: false
+        },
+        {
+          id: 'glasses5',
+          src: '../oculos/img/model5.png',
+          style: '',
+          visible: false
+        },
+        {
+          id: 'glasses6',
+          src: '../oculos/img/model6.png',
+          style: '',
+          visible: false
+        },
+        {
+          id: 'b42',
+          src: '../oculos/img/b42.svg',
+          style: 'margin-top: 10px;',
+          visible: false
+        },
+      ];
+      const listModel = [
+        {
+          img: {
+            id: 'headModel',
+            src: './models/headModel/headOccluder.glb'
+          },
+          html: `<a-entity mindar-face-target="anchorIndex: 168">
+            <a-gltf-model mindar-face-occluder position="0 -0.3 0" rotation="1 0 0" scale="0.072 0.072 0.072" src="#headModel"></a-gltf-model>
+          </a-entity>`
+        },
+        {
+          img: {
+            id: 'glassesModel',
+            src: './models/glasses/model1/scene.gltf'
+          },
+          html: `<a-entity mindar-face-target="anchorIndex: 168">
+            <a-gltf-model visible="false" class="glasses1-entity" rotation="0 270 -2" position="0.02 -0.5 -0.01" scale="0.093 0.095 0.088" src="#glassesModel"></a-gltf-model>
+          </a-entity>`
+        },
+        {
+          img: {
+            id: 'glassesModel2',
+            src: './models/glasses/model2/scene.gltf'
+          },
+          html: `<a-entity mindar-face-target="anchorIndex: 168">
+            <a-gltf-model visible="false" class="glasses2-entity" rotation="0 89 4" position="0 -0.25 0" scale="0.06 0.05 0.058" src="#glassesModel2"></a-gltf-model>
+          </a-entity>`
+        },
+        {
+          img: {
+            id: 'glassesModel3',
+            src: './models/glasses/model3/scene.gltf'
+          },
+          html: `<a-entity mindar-face-target="anchorIndex: 168">
+            <a-gltf-model visible="false" class="glasses3-entity" rotation="3 0 0" position="0 -0.08 0" scale="0.74 0.69 1.25" src="#glassesModel3"></a-gltf-model>
+          </a-entity>`
+        },
+        {
+          img: {
+            id: 'glassesModel4',
+            src: './models/glasses/model4/scene.gltf'
+          },
+          html: `<a-entity mindar-face-target="anchorIndex: 168">
+            <a-gltf-model visible="false" class="glasses4-entity" rotation="6 0 0" position="0 0.03 -0.2" scale="0.0415 0.0415 0.052" src="#glassesModel4"></a-gltf-model>
+          </a-entity>`
+        },
+        {
+          img: {
+            id: 'glassesModel5',
+            src: './models/glasses/model5/scene.gltf'
+          },
+          html: `<a-entity mindar-face-target="anchorIndex: 168">
+            <a-gltf-model visible="false" class="glasses5-entity" rotation="2 0 0" position="0 -0.2 -0.58" scale="0.76 0.76 0.82" src="#glassesModel5"></a-gltf-model>
+          </a-entity>`
+        },
+        {
+          img: {
+            id: 'glassesModel6',
+            src: './models/glasses/model6/scene.gltf'
+          },
+          html: `<a-entity mindar-face-target="anchorIndex: 168">
+            <a-gltf-model visible="false" class="glasses6-entity" rotation="5 0 0" position="0 -0.32 -0.21" scale="0.074 0.074 0.102" src="#glassesModel6"></a-gltf-model>
+          </a-entity>`
+        },
+      ];
 
-        if (panel.classList.contains('expanded')) {
-          panel.style.maxHeight = '400px';
-        } else {
-          panel.style.maxHeight = '40px';
-        }
-      }
-
-      function addPageWrapper() {
-        let page = document.querySelector('.page-wrapper');
-        let container = document.querySelector('.try-on-container');
-        page.style.display = 'flex';
-        page.style.justifyContent = 'center';
-        page.style.alignItems = 'center';
-        page.style.width = '100%';
-        page.style.height = '100%';
-        page.style.backgroundColor = '#004a8d';
-
-        container.style.width = '40%';
-        container.style.height = '80%';
-        container.style.zIndex = '2';        
-      }
-
-      document.querySelector(".button-menu").addEventListener("click", toggleMenu);
-      document.addEventListener("DOMContentLoaded", function() {
-        const isInIframe = window !== window.parent;
-
-        const sceneEl = document.querySelector('a-scene');
-        let arSystem;
-        sceneEl.addEventListener('loaded', function () {
-          arSystem = sceneEl.systems["mindar-face-system"];
-          if (isInIframe) {
-            window.addEventListener('message', function(event) {
-              if(event.data == 'start') {
-                arSystem.start();
-              } else {
-                arSystem.stop();
-              }
-            });
-          } else {
-            arSystem.start();
-          }
-        });
-
-        const list = ["glasses1","glasses2", "glasses3", "glasses4", "glasses5", "glasses6"];
-        const visibles = [false, false, false, false, false, false];
-        const setVisible = (button, entities, visible) => {
-          if (visible) {
-            button.classList.add("selected");
-            if (window.innerWidth < 700) {
-              toggleMenu();
-            }
-          } else {
-            button.classList.remove("selected");
-          }
-          entities.forEach((entity) => {
-            entity.setAttribute("visible", visible);
-          });
-        }
-        list.forEach((item, index) => {
-          const button = document.querySelector("#" + item);
-          const entities = document.querySelectorAll("." + item + "-entity");
-          setVisible(button, entities, false);
-          button.addEventListener('click', () => {
-            list.forEach((otherItem, otherIndex) => {
-              if (otherIndex !== index) {
-                const otherButton = document.querySelector("#" + otherItem);
-                const otherEntities = document.querySelectorAll("." + otherItem + "-entity");
-                visibles[otherIndex] = false;
-                setVisible(otherButton, otherEntities, false);
-              }
-            });
-            visibles[index] = !visibles[index];
-            setVisible(button, entities, visibles[index]);
-          });
-        });
-
-        const startButton = document.querySelector("#example-start-button");
-        const stopButton = document.querySelector("#example-stop-button");
-        // arReady event triggered when ready
-        sceneEl.addEventListener("arReady", (event) => {
-          console.log("ar ready");
-        });
-        // detect target found
-        sceneEl.addEventListener("targetFound", event => {
-          console.log("target found");
-        });
-        // detect target lost
-        sceneEl.addEventListener("targetLost", event => {
-          console.log("target lost");
-        });
-        // arError event triggered when something went wrong. Mostly browser compatbility issue
-        sceneEl.addEventListener("arError", (event) => {
-          console.log("ar error");
-          if(event.detail && event.detail.error == "VIDEO_FAIL") {
-            alert("Câmera não encontrada ou sem permissão de uso");
-          }
-        });
-
-        if (!isInIframe) {
-          addPageWrapper();
-        }
-      })
+      b42Glasse.setModels(listModel);
+      b42Glasse.setOptions(listOptions);
     </script>
   </body>
 </html>
